@@ -13,3 +13,5 @@
 
 $router->get('/', 'BlastController@index');
 $router->post('/', 'BlastController@analyse');
+
+$router->post('/api', 'BlastController@api');

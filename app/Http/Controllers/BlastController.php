@@ -47,4 +47,27 @@ class BlastController extends Controller
             'results' => $output,
         ]);
     }
+
+    public function api(Request $request)
+    {
+        $sequence = fopen(public_path() . '/files/sequence.fa', 'w');
+        fwrite($sequence, $request->sequence);
+        fclose($sequence);
+
+        $db = fopen('files/db.fsa', 'w');
+        fwrite($db, $request->db);
+        fclose($db);
+
+        exec('makeblastdb -in files/db.fsa -title "Database" -dbtype prot');
+        exec('blastp -query files/sequence.fa -db files/db.fsa -out files/results.txt');
+        $output = file_get_contents('files/results.txt');
+
+        $files = glob('files/*');
+        foreach ($files as $file){
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+        return response()->json(['response' => $output]);
+    }
 }
