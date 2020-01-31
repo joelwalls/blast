@@ -36,7 +36,7 @@ class BlastController extends Controller
         $res = exec('makeblastdb -in files/db.fsa -title "Database" -dbtype nuc');
         exec('blastn -query files/sequence.fa -db files/db.fsa -out results.txt');
         $output = file_get_contents('results.txt');
-        dd($output);
+        dd($res);
 
         $files = glob('files/*');
         foreach ($files as $file){
