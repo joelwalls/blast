@@ -25,7 +25,7 @@ class BlastController extends Controller
 
     public function analyse(Request $request)
     {
-        $sequence = fopen('files/sequence.fa', 'w');
+        $sequence = fopen(public_path() . '/files/sequence.fa', 'w');
         fwrite($sequence, $request->sequence);
         fclose($sequence);
 
@@ -34,9 +34,9 @@ class BlastController extends Controller
         fclose($db);
 
         $res = exec('makeblastdb -in files/db.fsa -title "Database" -dbtype nuc');
-        dd($res);
         exec('blastn -query files/sequence.fa -db files/db.fsa -out results.txt');
         $output = file_get_contents('results.txt');
+        dd($output);
 
         $files = glob('files/*');
         foreach ($files as $file){
