@@ -68,6 +68,7 @@ class BlastController extends Controller
                 unlink($file);
             }
         }
-        return response()->json(['response' => $output]);
+        return response()->json(['response' => $output])->header('Access-Control-Allow-Origin', '*')
+        ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     }
 }
