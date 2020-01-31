@@ -37,12 +37,12 @@ class BlastController extends Controller
         exec('blastn -query files/sequence.fa -db files/db.fsa -out files/results.txt');
         $output = file_get_contents('files/results.txt');
 
-        $files = glob('files/*');
-        foreach ($files as $file){
-            if (is_file($file)) {
-                unlink($file);
-            }
-        }
+        // $files = glob('files/*');
+        // foreach ($files as $file){
+        //     if (is_file($file)) {
+        //         unlink($file);
+        //     }
+        // }
         return view('blast.index', [
             'results' => $output,
         ]);
